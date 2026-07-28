@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapterly — Editar perfil</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <%- include('partials/nav') %>
+
+  <div class="form-wrap">
+    <h1>Editar perfil</h1>
+    <p class="sub">@<%= currentUser.username %></p>
+
+    <% if (error) { %><div class="error-msg"><%= error %></div><% } %>
+    <% if (success) { %><div class="error-msg" style="background:#e6f4ea; border-color:#2e7d32; color:#1b5e20;">Perfil actualizado.</div><% } %>
+
+    <form method="POST" action="/settings">
+      <div class="field">
+        <label>Link a tu foto de perfil</label>
+        <input type="url" name="avatar_url" value="<%= profile.avatar_url || '' %>" placeholder="https://...">
+      </div>
+      <div class="field">
+        <label>Bio</label>
+        <textarea name="bio" placeholder="Cuéntanos de ti..."><%= profile.bio || '' %></textarea>
+      </div>
+      <button type="submit" class="btn-primary">Guardar cambios</button>
+    </form>
+  </div>
+
+  <%- include('partials/footer') %>
+</body>
+</html>
