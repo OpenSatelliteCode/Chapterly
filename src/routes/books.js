@@ -4,8 +4,13 @@ const { requireAuth } = require('../middleware/auth');
 
 const router = express.Router();
 
-// ---------- INICIO / EXPLORAR ----------
-router.get('/', async (req, res) => {
+// ---------- PORTADA ----------
+router.get('/', (req, res) => {
+  res.render('landing');
+});
+
+// ---------- EXPLORAR ----------
+router.get('/explore', async (req, res) => {
   try {
     const categories = await pool.query('SELECT * FROM categories ORDER BY name');
 
@@ -197,7 +202,7 @@ router.post('/book/:id/favorite', requireAuth, async (req, res) => {
     } else {
       await pool.query('INSERT INTO favorites (user_id, book_id) VALUES ($1, $2)', [req.session.userId, req.params.id]);
     }
-    res.redirect(req.get('referer') || '/');
+    res.redirect(req.get('referer') || '/explore');
   } catch (err) {
     console.error(err);
     res.status(500).send('Error actualizando favoritos.');
