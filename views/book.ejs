@@ -12,7 +12,7 @@
   <div class="book-header">
     <div class="cat-eyebrow"><%= book.category_name || 'Sin categoría' %></div>
     <h1><%= book.title %></h1>
-    <div class="author-line">por <a href="/u/<%= book.author %>"><%= book.author %></a></div>
+    <div class="author-line">por <a href="/u/<%= book.author %>">@<%= book.author %></a></div>
     <% if (book.synopsis) { %><p class="synopsis"><%= book.synopsis %></p><% } %>
     <div class="book-actions">
       <% if (chapters.length) { %>
@@ -62,7 +62,7 @@
     <% } %>
     <% comments.forEach(function(c) { %>
       <div class="comment">
-        <div class="who"><%= c.username %></div>
+        <div class="who"><a href="/u/<%= c.username %>">@<%= c.username %></a></div>
         <div class="txt"><%= c.content %></div>
       </div>
     <% }) %>
