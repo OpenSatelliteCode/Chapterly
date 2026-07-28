@@ -12,7 +12,7 @@
 
   <div class="header-block">
     <h1>Encuentra tu <span>próximo capítulo.</span></h1>
-    <form class="searchbar" method="GET" action="/">
+    <form class="searchbar" method="GET" action="/explore">
       <span>&#128269;</span>
       <input type="text" name="q" value="<%= query %>" placeholder="Busca por título o autor...">
       <% if (activeCategory) { %><input type="hidden" name="category" value="<%= activeCategory %>"><% } %>
@@ -20,9 +20,9 @@
   </div>
 
   <div class="categories">
-    <a href="/<%= query ? '?q=' + query : '' %>" class="pill <%= !activeCategory ? 'active' : '' %>">Todos</a>
+    <a href="/explore<%= query ? '?q=' + query : '' %>" class="pill <%= !activeCategory ? 'active' : '' %>">Todos</a>
     <% categories.forEach(function(c) { %>
-      <a href="/?category=<%= encodeURIComponent(c.name) %><%= query ? '&q=' + query : '' %>"
+      <a href="/explore?category=<%= encodeURIComponent(c.name) %><%= query ? '&q=' + query : '' %>"
          class="pill <%= activeCategory === c.name ? 'active' : '' %>"><%= c.name %></a>
     <% }) %>
   </div>
