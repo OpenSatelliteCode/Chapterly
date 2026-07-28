@@ -29,12 +29,13 @@ router.post('/register', async (req, res) => {
 
     const hash = await bcrypt.hash(password, 10);
     const result = await pool.query(
-      'INSERT INTO users (username, email, password_hash) VALUES ($1, $2, $3) RETURNING id, username',
+      'INSERT INTO users (username, email, password_hash) VALUES ($1, $2, $3) RETURNING id, username, avatar_url',
       [username, email, hash]
     );
 
     req.session.userId = result.rows[0].id;
     req.session.username = result.rows[0].username;
+    req.session.avatarUrl = result.rows[0].avatar_url || '';
     res.redirect('/');
   } catch (err) {
     console.error(err);
@@ -59,6 +60,7 @@ router.post('/login', async (req, res) => {
 
     req.session.userId = user.id;
     req.session.username = user.username;
+    req.session.avatarUrl = user.avatar_url || '';
     res.redirect('/');
   } catch (err) {
     console.error(err);
