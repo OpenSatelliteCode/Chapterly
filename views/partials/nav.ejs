@@ -10,7 +10,13 @@
   <div class="nav-right">
     <% if (currentUser) { %>
       <a href="/upload" class="nav-cta">Sube tu libro</a>
-      <a href="/u/<%= currentUser.username %>" class="avatar"><%= currentUser.username.charAt(0).toUpperCase() %></a>
+      <a href="/u/<%= currentUser.username %>">
+        <% if (currentUser.avatarUrl) { %>
+          <img src="<%= currentUser.avatarUrl %>" alt="@<%= currentUser.username %>" class="avatar" style="object-fit: cover;">
+        <% } else { %>
+          <span class="avatar"><%= currentUser.username.charAt(0).toUpperCase() %></span>
+        <% } %>
+      </a>
       <form class="logout-form" action="/logout" method="POST">
         <button type="submit">Salir</button>
       </form>
