@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapterly — Sube tu historia</title>
+<link rel="stylesheet" href="/css/style.css">
+<style>
+  .hero {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    align-items: center;
+    padding: 8vh 6vw 10vh;
+    gap: 40px;
+    border-bottom: 1px solid var(--line);
+  }
+  .hero h1 {
+    font-size: clamp(40px, 6vw, 68px);
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    line-height: 1.05;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero p {
+    margin-top: 22px;
+    font-size: 18px;
+    color: var(--grey);
+    max-width: 460px;
+  }
+  .hero-buttons { margin-top: 34px; display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn-primary-inline {
+    background: var(--ink); color: var(--paper);
+    padding: 14px 30px; border-radius: 999px;
+    font-weight: 700; font-size: 15px;
+  }
+  .btn-secondary-inline {
+    border: 1.5px solid var(--ink);
+    padding: 14px 30px; border-radius: 999px;
+    font-weight: 700; font-size: 15px;
+  }
+
+  .stack { position: relative; height: 380px; }
+  .card {
+    position: absolute; width: 220px; height: 300px;
+    background: var(--paper); border: 1.5px solid var(--ink);
+    border-radius: 10px; padding: 22px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    box-shadow: 8px 8px 0 var(--ink);
+  }
+  .card:nth-child(1) { top: 0; left: 40px; transform: rotate(-6deg); z-index: 3; }
+  .card:nth-child(2) { top: 30px; left: 130px; transform: rotate(4deg); z-index: 2; background: var(--ink); color: var(--paper); box-shadow: 8px 8px 0 var(--accent); }
+  .card:nth-child(3) { top: 70px; left: 10px; transform: rotate(3deg); z-index: 1; }
+  .card .tag { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); }
+  .card:nth-child(2) .tag { color: var(--accent); }
+  .card .cardtitle { font-size: 20px; font-weight: 700; line-height: 1.2; }
+  .card .author { font-size: 13px; color: var(--grey); }
+  .card:nth-child(2) .author { color: #b8b8b8; }
+
+  section.block { padding: 10vh 6vw; border-bottom: 1px solid var(--line); }
+  .eyebrow { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); margin-bottom: 14px; }
+  .block h2 { font-size: clamp(28px, 4vw, 40px); font-weight: 800; letter-spacing: -1px; max-width: 700px; }
+
+  .grid3 { margin-top: 60px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 1px solid var(--line); }
+  .grid3 .item { padding: 36px 30px 36px 0; border-right: 1px solid var(--line); }
+  .grid3 .item:last-child { border-right: none; }
+  .grid3 .num { font-size: 14px; color: var(--grey); font-weight: 600; margin-bottom: 18px; }
+  .grid3 .item h3 { font-size: 20px; font-weight: 700; margin-bottom: 10px; }
+  .grid3 .item p { font-size: 15px; color: var(--grey); }
+
+  .cta-block { text-align: center; padding: 12vh 6vw; }
+  .cta-block h2 { font-size: clamp(32px, 5vw, 52px); font-weight: 800; letter-spacing: -1.5px; max-width: 600px; margin: 0 auto 30px; }
+  .cta-block h2 span { color: var(--accent); }
+
+  @media (max-width: 800px) {
+    .hero { grid-template-columns: 1fr; }
+    .stack { height: 320px; margin-top: 20px; }
+    .grid3 { grid-template-columns: 1fr; }
+    .grid3 .item { border-right: none; border-bottom: 1px solid var(--line); padding: 26px 0; }
+  }
+</style>
+</head>
+<body>
+
+  <%- include('partials/nav') %>
+
+  <section class="hero">
+    <div>
+      <h1>Tu historia<br>merece su<br><span>propio capítulo.</span></h1>
+      <p>Sube tu libro, comparte tu mundo, y deja que otros lo lean. Chapterly es el estante donde cualquiera puede publicar.</p>
+      <div class="hero-buttons">
+        <a href="<%= currentUser ? '/upload' : '/register' %>" class="btn-primary-inline">Sube tu libro</a>
+        <a href="/explore" class="btn-secondary-inline">Explorar historias</a>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="card">
+        <div class="tag">Ficción</div>
+        <div class="cardtitle">La ciudad que no duerme</div>
+        <div class="author">por Renata Cruz</div>
+      </div>
+      <div class="card">
+        <div class="tag">Nuevo</div>
+        <div class="cardtitle">Cartas desde el andén 4</div>
+        <div class="author">por J. Molina</div>
+      </div>
+      <div class="card">
+        <div class="tag">Popular</div>
+        <div class="cardtitle">El último faro</div>
+        <div class="author">por Sofía Reyes</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="como">
+    <div class="eyebrow">Cómo funciona</div>
+    <h2>De tu cabeza a un lector, en tres pasos.</h2>
+    <div class="grid3">
+      <div class="item">
+        <div class="num">01</div>
+        <h3>Sube tu manuscrito</h3>
+        <p>Capítulo por capítulo o de una sola vez. Tú decides el ritmo.</p>
+      </div>
+      <div class="item">
+        <div class="num">02</div>
+        <h3>Dale forma</h3>
+        <p>Portada, sinopsis y categoría. Chapterly acomoda el resto.</p>
+      </div>
+      <div class="item">
+        <div class="num">03</div>
+        <h3>Publica y comparte</h3>
+        <p>Tu libro entra al estante público, listo para que lo encuentren.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-block" id="comunidad">
+    <h2>Cada libro empieza con <span>un primer capítulo.</span></h2>
+    <a href="<%= currentUser ? '/upload' : '/register' %>" class="btn-primary-inline">Crear cuenta gratis</a>
+  </section>
+
+  <%- include('partials/footer') %>
+
+</body>
+</html>
