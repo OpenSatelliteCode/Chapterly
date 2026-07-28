@@ -4,9 +4,7 @@ const path = require('path');
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: process.env.DATABASE_URL && process.env.DATABASE_URL.includes('railway')
-    ? { rejectUnauthorized: false }
-    : (process.env.PGSSLMODE === 'require' ? { rejectUnauthorized: false } : false)
+  ssl: false
 });
 
 async function initSchema() {
