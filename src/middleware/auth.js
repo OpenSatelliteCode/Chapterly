@@ -8,7 +8,7 @@ function requireAuth(req, res, next) {
 // Adjunta datos básicos del usuario logeado a todas las vistas
 function attachUser(req, res, next) {
   res.locals.currentUser = req.session.userId
-    ? { id: req.session.userId, username: req.session.username }
+    ? { id: req.session.userId, username: req.session.username, avatarUrl: req.session.avatarUrl || '' }
     : null;
   next();
 }
