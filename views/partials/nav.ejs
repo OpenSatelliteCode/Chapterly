@@ -1,0 +1,21 @@
+<nav>
+  <a href="/"><img src="/img/logo.png" alt="Chapterly" class="logo-img"></a>
+  <div class="nav-links">
+    <a href="/" class="<%= typeof active !== 'undefined' && active === 'explora' ? 'active' : '' %>">Explora</a>
+    <% if (currentUser) { %>
+      <a href="/favorites" class="<%= typeof active !== 'undefined' && active === 'favoritos' ? 'active' : '' %>">Mis favoritos</a>
+      <a href="/my-books" class="<%= typeof active !== 'undefined' && active === 'biblioteca' ? 'active' : '' %>">Mi biblioteca</a>
+    <% } %>
+  </div>
+  <div class="nav-right">
+    <% if (currentUser) { %>
+      <a href="/upload" class="nav-cta">Sube tu libro</a>
+      <a href="/u/<%= currentUser.username %>" class="avatar"><%= currentUser.username.charAt(0).toUpperCase() %></a>
+      <form class="logout-form" action="/logout" method="POST">
+        <button type="submit">Salir</button>
+      </form>
+    <% } else { %>
+      <a href="/login" class="nav-cta">Iniciar sesión</a>
+    <% } %>
+  </div>
+</nav>
