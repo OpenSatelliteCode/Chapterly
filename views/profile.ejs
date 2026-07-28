@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapterly — <%= profileUser.username %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <%- include('partials/nav') %>
+
+  <div class="profile-header">
+    <div class="avatar-big"><%= profileUser.username.charAt(0).toUpperCase() %></div>
+    <div>
+      <h1><%= profileUser.username %></h1>
+      <% if (profileUser.bio) { %><div class="bio"><%= profileUser.bio %></div><% } %>
+    </div>
+  </div>
+
+  <div class="section-label">
+    <h2>Libros publicados (<%= books.length %>)</h2>
+  </div>
+
+  <% if (books.length === 0) { %>
+    <div class="empty-state">Este usuario todavía no ha publicado nada.</div>
+  <% } else { %>
+    <div class="grid">
+      <% books.forEach(function(book) { %>
+        <div class="book">
+          <a href="/book/<%= book.id %>" class="cover" style="text-decoration:none; color:inherit;">
+            <div class="cat-tag"><%= book.category_name || 'Sin categoría' %></div>
+            <div class="cover-title"><%= book.title %></div>
+          </a>
+          <a href="/book/<%= book.id %>" class="book-meta" style="text-decoration:none; color:inherit;">
+            <div class="title"><%= book.title %></div>
+          </a>
+        </div>
+      <% }) %>
+    </div>
+  <% } %>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

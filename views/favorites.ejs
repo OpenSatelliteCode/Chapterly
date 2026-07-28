@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapterly — Mis favoritos</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <% var active = 'favoritos' %>
+  <%- include('partials/nav') %>
+
+  <div class="section-label" style="padding-top: 6vh;">
+    <h2>Mis favoritos (<%= books.length %>)</h2>
+  </div>
+
+  <% if (books.length === 0) { %>
+    <div class="empty-state">Todavía no tienes favoritos. Explora y guarda los libros que te gusten con el corazón &#9825;</div>
+  <% } else { %>
+    <div class="grid">
+      <% books.forEach(function(book) { %>
+        <div class="book">
+          <a href="/book/<%= book.id %>" class="cover" style="text-decoration:none; color:inherit;">
+            <div class="cat-tag"><%= book.category_name || 'Sin categoría' %></div>
+            <div class="cover-title"><%= book.title %></div>
+          </a>
+          <a href="/book/<%= book.id %>" class="book-meta" style="text-decoration:none; color:inherit;">
+            <div class="title"><%= book.title %></div>
+            <div class="author"><%= book.author %></div>
+          </a>
+        </div>
+      <% }) %>
+    </div>
+  <% } %>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

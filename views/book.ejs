@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapterly — <%= book.title %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <%- include('partials/nav') %>
+
+  <div class="book-header">
+    <div class="cat-eyebrow"><%= book.category_name || 'Sin categoría' %></div>
+    <h1><%= book.title %></h1>
+    <div class="author-line">por <a href="/u/<%= book.author %>"><%= book.author %></a></div>
+    <% if (book.synopsis) { %><p class="synopsis"><%= book.synopsis %></p><% } %>
+    <div class="book-actions">
+      <% if (chapters.length) { %>
+        <a href="/book/<%= book.id %>/chapter/<%= chapters[0].chapter_number %>" class="btn-primary" style="width:auto; display:inline-block; padding:13px 28px;">Empezar a leer</a>
+      <% } %>
+      <% if (currentUser) { %>
+        <form action="/book/<%= book.id %>/favorite" method="POST">
+          <button type="submit" class="btn-outline"><%= isFavorite ? '♥ En favoritos' : '♡ Agregar a favoritos' %></button>
+        </form>
+      <% } %>
+    </div>
+  </div>
+
+  <div class="chapter-list">
+    <h2>Capítulos (<%= chapters.length %>)</h2>
+    <% chapters.forEach(function(ch) { %>
+      <div class="chapter-item">
+        <div><span class="num">#<%= ch.chapter_number %></span><a href="/book/<%= book.id %>/chapter/<%= ch.chapter_number %>"><%= ch.title %></a></div>
+      </div>
+    <% }) %>
+
+    <% if (currentUser && currentUser.id === book.author_id) { %>
+      <details style="margin-top: 24px;">
+        <summary style="cursor:pointer; font-weight:700; font-size:14px;">+ Agregar nuevo capítulo</summary>
+        <form action="/book/<%= book.id %>/chapter" method="POST" style="margin-top: 16px;">
+          <div class="field">
+            <label>Título del capítulo</label>
+            <input type="text" name="chapter_title" placeholder="Capítulo <%= chapters.length + 1 %>">
+          </div>
+          <div class="field">
+            <label>Contenido</label>
+            <textarea name="chapter_content" style="min-height: 200px;" required></textarea>
+          </div>
+          <button type="submit" class="btn-primary">Publicar capítulo</button>
+        </form>
+      </details>
+    <% } %>
+  </div>
+
+  <div class="comments-block">
+    <h2>Comentarios (<%= comments.length %>)</h2>
+    <% if (currentUser) { %>
+      <form class="comment-form" action="/book/<%= book.id %>/comment" method="POST">
+        <textarea name="content" placeholder="Escribe un comentario..." required></textarea>
+        <button type="submit">Enviar</button>
+      </form>
+    <% } %>
+    <% comments.forEach(function(c) { %>
+      <div class="comment">
+        <div class="who"><%= c.username %></div>
+        <div class="txt"><%= c.content %></div>
+      </div>
+    <% }) %>
+    <% if (comments.length === 0) { %>
+      <p style="color: var(--grey); font-size: 14px;">Todavía no hay comentarios. ¡Sé el primero!</p>
+    <% } %>
+  </div>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

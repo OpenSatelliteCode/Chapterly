@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapterly — <%= chapter.title %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <%- include('partials/nav') %>
+
+  <div class="reader">
+    <div class="breadcrumb"><a href="/book/<%= book.id %>"><%= book.title %></a> · por <%= book.author %></div>
+    <h1><%= chapter.title %></h1>
+    <div class="content"><%= chapter.content %></div>
+
+    <div class="reader-nav">
+      <% if (prevNum) { %><a href="/book/<%= book.id %>/chapter/<%= prevNum %>">&larr; Capítulo anterior</a><% } else { %><span>&larr; Capítulo anterior</span><% } %>
+      <% if (nextNum) { %><a href="/book/<%= book.id %>/chapter/<%= nextNum %>">Siguiente capítulo &rarr;</a><% } else { %><span>Siguiente capítulo &rarr;</span><% } %>
+    </div>
+  </div>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

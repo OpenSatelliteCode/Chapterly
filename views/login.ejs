@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapterly — Iniciar sesión</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <%- include('partials/nav') %>
+
+  <div class="form-wrap">
+    <h1>Bienvenido de vuelta</h1>
+    <p class="sub">Entra a tu cuenta para seguir leyendo y publicando.</p>
+
+    <% if (error) { %><div class="error-msg"><%= error %></div><% } %>
+
+    <form method="POST" action="/login">
+      <div class="field">
+        <label>Correo</label>
+        <input type="email" name="email" required>
+      </div>
+      <div class="field">
+        <label>Contraseña</label>
+        <input type="password" name="password" required>
+      </div>
+      <button type="submit" class="btn-primary">Iniciar sesión</button>
+    </form>
+
+    <div class="form-footer">¿No tienes cuenta? <a href="/register">Regístrate</a></div>
+  </div>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

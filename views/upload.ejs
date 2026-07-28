@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapterly — Sube tu libro</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <%- include('partials/nav') %>
+
+  <div class="form-wrap" style="max-width: 600px;">
+    <h1>Sube tu libro</h1>
+    <p class="sub">Cuéntanos de qué se trata y comparte tu primer capítulo. Podrás agregar más capítulos después.</p>
+
+    <% if (error) { %><div class="error-msg"><%= error %></div><% } %>
+
+    <form method="POST" action="/upload">
+      <div class="field">
+        <label>Título del libro</label>
+        <input type="text" name="title" maxlength="200" required>
+      </div>
+      <div class="field">
+        <label>Sinopsis</label>
+        <textarea name="synopsis" placeholder="De qué trata tu historia..."></textarea>
+      </div>
+      <div class="field">
+        <label>Categoría</label>
+        <select name="category_id">
+          <option value="">Sin categoría</option>
+          <% categories.forEach(function(c) { %>
+            <option value="<%= c.id %>"><%= c.name %></option>
+          <% }) %>
+        </select>
+      </div>
+      <div class="field">
+        <label>Título del primer capítulo</label>
+        <input type="text" name="chapter_title" placeholder="Capítulo 1" maxlength="200">
+      </div>
+      <div class="field">
+        <label>Contenido del primer capítulo</label>
+        <textarea name="chapter_content" style="min-height: 240px;" required></textarea>
+      </div>
+      <button type="submit" class="btn-primary">Publicar libro</button>
+    </form>
+  </div>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

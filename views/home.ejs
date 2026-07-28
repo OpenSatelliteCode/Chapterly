@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapterly — Explora</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <% var active = 'explora' %>
+  <%- include('partials/nav') %>
+
+  <div class="header-block">
+    <h1>Encuentra tu <span>próximo capítulo.</span></h1>
+    <form class="searchbar" method="GET" action="/">
+      <span>&#128269;</span>
+      <input type="text" name="q" value="<%= query %>" placeholder="Busca por título o autor...">
+      <% if (activeCategory) { %><input type="hidden" name="category" value="<%= activeCategory %>"><% } %>
+    </form>
+  </div>
+
+  <div class="categories">
+    <a href="/<%= query ? '?q=' + query : '' %>" class="pill <%= !activeCategory ? 'active' : '' %>">Todos</a>
+    <% categories.forEach(function(c) { %>
+      <a href="/?category=<%= encodeURIComponent(c.name) %><%= query ? '&q=' + query : '' %>"
+         class="pill <%= activeCategory === c.name ? 'active' : '' %>"><%= c.name %></a>
+    <% }) %>
+  </div>
+
+  <div class="section-label">
+    <h2><%= query || activeCategory ? 'Resultados' : 'Recién publicados' %></h2>
+  </div>
+
+  <% if (books.length === 0) { %>
+    <div class="empty-state">No encontramos ningún libro con eso. ¡Prueba otra búsqueda!</div>
+  <% } else { %>
+    <div class="grid">
+      <% books.forEach(function(book) { %>
+        <div class="book">
+          <div class="cover">
+            <% if (currentUser) { %>
+              <form class="fav-form" action="/book/<%= book.id %>/favorite" method="POST">
+                <button type="submit" class="fav-btn <%= favoriteIds.includes(book.id) ? 'active' : '' %>">&#9825;</button>
+              </form>
+            <% } %>
+            <a href="/book/<%= book.id %>" style="text-decoration:none; color:inherit; display:flex; flex-direction:column; justify-content:space-between; height:100%;">
+              <div class="cat-tag"><%= book.category_name || 'Sin categoría' %></div>
+              <div class="cover-title"><%= book.title %></div>
+            </a>
+          </div>
+          <a href="/book/<%= book.id %>" class="book-meta" style="text-decoration:none; color:inherit;">
+            <div class="title"><%= book.title %></div>
+            <div class="author"><%= book.author %></div>
+          </a>
+        </div>
+      <% }) %>
+    </div>
+  <% } %>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

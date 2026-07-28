@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapterly — Crear cuenta</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <%- include('partials/nav') %>
+
+  <div class="form-wrap">
+    <h1>Crea tu cuenta</h1>
+    <p class="sub">Empieza a subir y leer historias en Chapterly.</p>
+
+    <% if (error) { %><div class="error-msg"><%= error %></div><% } %>
+
+    <form method="POST" action="/register">
+      <div class="field">
+        <label>Nombre de usuario</label>
+        <input type="text" name="username" maxlength="30" required>
+      </div>
+      <div class="field">
+        <label>Correo</label>
+        <input type="email" name="email" required>
+      </div>
+      <div class="field">
+        <label>Contraseña</label>
+        <input type="password" name="password" minlength="6" required>
+      </div>
+      <button type="submit" class="btn-primary">Crear cuenta</button>
+    </form>
+
+    <div class="form-footer">¿Ya tienes cuenta? <a href="/login">Inicia sesión</a></div>
+  </div>
+
+  <%- include('partials/footer') %>
+</body>
+</html>
